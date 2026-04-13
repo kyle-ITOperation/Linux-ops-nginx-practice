@@ -38,27 +38,37 @@
 ### 场景1：服务正常运行
 
 #### 操作
+
+```bash
 systemctl status nginx
 curl localhost
+```
+
 #### 现象
 
 - Nginx服务处于 active (running)
 - 页面可以正常访问
-- access.log 中记录访问日志
+- 访问日志（access.log）中记录请求信息
 
 #### 结论
 
-服务运行正常，可以通过状态和日志进行确认。
+服务运行正常，可以通过服务状态和日志进行确认。
 
 ---
 
 ### 场景2：服务异常（故障模拟）
 
 #### 操作（模拟故障）
+
+```bash
 sudo systemctl stop nginx
+```
 
 #### 现象
+
+```bash
 curl localhost
+```
 
 - 无法访问（connection refused）
 
@@ -67,7 +77,10 @@ curl localhost
 ### 场景3：故障排查过程
 
 #### 1. 服务状态确认
+
+```bash
 systemctl status nginx
+```
 
 结果：
 
@@ -76,11 +89,14 @@ systemctl status nginx
 ---
 
 #### 2. 日志确认
+
+```bash
 tail -n 20 /var/log/nginx/error.log
+```
 
 说明：
 
-- 日志中未发现明显错误（服务未运行时可能无日志输出）
+- 日志中未发现明显错误信息，因此结合服务状态判断问题原因
 
 ---
 
@@ -94,10 +110,18 @@ tail -n 20 /var/log/nginx/error.log
 ### 场景4：故障处理与恢复
 
 #### 执行恢复
+
+```bash
 sudo systemctl start nginx
+```
+
+---
 
 #### 验证恢复
+
+```bash
 curl localhost
+```
 
 结果：
 
@@ -109,7 +133,7 @@ curl localhost
 
 本项目完成了基础运维流程实践：
 
-👉 问题发现 → 状态确认 → 日志分析 → 原因判断 → 恢复处理
+👉 问题发现 → 状态确认 → 日志分析 → 原因判断 → 执行恢复
 
 ---
 
